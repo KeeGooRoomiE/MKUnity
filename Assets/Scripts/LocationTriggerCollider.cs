@@ -1,64 +1,159 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LocationTriggerCollider : MonoBehaviour
 {
-    [SerializeField] public GameObject location;
-    [SerializeField] public int locationNumber;
-    [SerializeField] public Transform parent;
+    //[SerializeField] public GameObject location;        //itself location prefab
+    [SerializeField] public int locationNumber;         //counted number of that location
+    [SerializeField] EnemyGenController EUController;           //enemy unit controller
+    [SerializeField] private int unitCount;             //counts of units on a location
+    [SerializeField] public bool isUnitExists;
     [SerializeField] public GameObject enemyUnit;
-    [SerializeField] public int EnemyValue;
-    [SerializeField] private int unitCount;
-    
-    private bool isUnitCreated;
-    private GameObject tmpUnit;
-    private GameObject playerUnit;
+    [SerializeField] public GameObject playerUnit;
+    [SerializeField] public bool bothTypeUnitsHere;
     private RectTransform rectTransform;
+    [SerializeField] public bool canAddRep;
+    [SerializeField] public bool canDivRep;
+    [SerializeField] public bool ActiveRepChange;
+    [SerializeField] public bool ActiveEnemyUnit;
+    [SerializeField] private LocationBehaviour locInfo; //check another location script
     
     private void Awake() {
-        rectTransform = GetComponent<RectTransform>();
-        isUnitCreated = false;
+        //rectTransform = GetComponent<RectTransform>();
+        bothTypeUnitsHere = false;
+        isUnitExists = false;
+        canAddRep = true;
+        canDivRep = true;
+        ActiveRepChange = false;
+        ActiveEnemyUnit = false;
+        locInfo = this.gameObject.GetComponent<LocationBehaviour>();
         }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
+    
+    private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Unit") {
-            unitCount += 1;
-            playerUnit = other.gameObject;
+            if (ActiveEnemyUnit == false) {
+                EUController.CreateUnit();
+            }
+            //playerUnit = other.gameObject;
         }
+    }
 
-        //check if available to make an enemy
-        if (tmpUnit == null) {
-            isUnitCreated = false;
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other == playerUnit) {
+            playerUnit = null;
+            ActiveRepChange = false;
         }
+        
+    }
+    
+    private void OnTriggerStay2D(Collider2D other) {
+        //Debug.Log("Something is collided!");
+        other.GetComponent<InitUnit>().currentLoc = locationNumber;
+        //Debug.Log("Set location "+locationNumber+" to a collided unit");
+        
+        //Debug.Log("OnTriggerColliderEnter2D called!");
+        //ActiveRepChange = true;
+        /*
+        //check for both units
+        if (isUnitExists == true) {
+            //Debug.Log("Location"+locationNumber+" have enemy unit...");
 
-        //create enemy unit
-        if (Random.Range(0,100) > EnemyValue) {
-            if (!isUnitCreated) {
-                tmpUnit = Instantiate(enemyUnit,parent);
-                tmpUnit.transform.position = location.transform.position;
-                isUnitCreated = true;
+            if (playerUnit != null) {
+                //Debug.Log("Location"+locationNumber+" have both enemy and player units...");
+                bothTypeUnitsHere = true;
+                LetUnitsFight(true);
+            } else {
+                //Debug.Log("player unit lost while checking...");
+                bothTypeUnitsHere = false;
+                LetUnitsFight(false);
             }
         }
+        */
     }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        //Debug.Log("Something is collided!");
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Unit") {
-            unitCount -= 1;
-            playerUnit = null;
-        }
+    IEnumerator Delay(float time) {
+        yield return new WaitForSeconds(time);
+        canAddRep = true;
+        canDivRep = true;
     }
 
     void Update() {
+        //ability to increment location reputation periodically
+        if (ActiveRepChange == true) {
+            if (canAddRep == true) {
+                locInfo.AddRep(1);
+                StartCoroutine(Delay(2.0f));
+                canAddRep = false;
+            }
+        }
 
-        //check both units to start attack
+        //ability to decrement location reputation periodically
+        if (ActiveEnemyUnit == true) {
+            if (canDivRep == true) {
+                locInfo.DivRep(1);
+                StartCoroutine(Delay(2.0f));
+                canDivRep = false;
+            }
+        }
+
+        //checking for existing enemy unit on a location
+        if (enemyUnit == null) {
+            ActiveEnemyUnit = false;
+        } else {
+            ActiveEnemyUnit = true;
+        }
+
+        //checking for existing player unit on a location
+        if (playerUnit == null) {
+            ActiveRepChange = false;
+        } else {
+            ActiveRepChange = true;
+        }
+
+        //make both units make attack
+        if (ActiveEnemyUnit && ActiveRepChange) {
+            if (playerUnit != null) {
+                if (enemyUnit != null) {
+                    playerUnit.GetComponent<InitUnit>().canAttack = true;
+                    playerUnit.GetComponent<InitUnit>().target = enemyUnit;
+                    //enemyUnit.canAttack = true;
+                    //enemyUnit.target = playerUnit;
+                }
+            }
+        }
+
+        if (playerUnit.GetComponent<InitUnit>().currentLoc != locationNumber) {
+            ActiveRepChange = false;
+            playerUnit = null;
+        }
+
+        if (enemyUnit != null) {
+            if (playerUnit != null) {
+                Debug.Log("Location sended to an enemy player instance");
+                enemyUnit.GetComponent<EnemyUnitInit>().target = playerUnit;
+            } else {
+                Debug.Log("Location sended to an enemy player null");
+                enemyUnit.GetComponent<EnemyUnitInit>().target = null;
+            }
+        }
+    }
+    /*
+
+    void Update() {
+
+        //trigger bool var if unit is empty\exists
+        if (enemyUnit == null) {
+            isUnitExists = false;
+        } else {
+            isUnitExists = true;
+            //Debug.Log("Location"+locationNumber+".enemyUnit is "+enemyUnit);
+        }
+
+        
+        /*
         if (playerUnit != null) {
             if (tmpUnit != null) {
                 playerUnit.GetComponent<InitUnit>().canAttack = true;
@@ -67,12 +162,26 @@ public class LocationTriggerCollider : MonoBehaviour
                 tmpUnit.GetComponent<InitUnit>().canAttack = true;
                 tmpUnit.GetComponent<InitUnit>().enemy = playerUnit;
             } else {
-                Debug.Log("tmpUnit is lost");
+                //Debug.Log("tmpUnit is lost");
                 playerUnit.GetComponent<InitUnit>().canAttack = false;
                 playerUnit.GetComponent<InitUnit>().enemy = null;
             }
         } else {
             //Debug.Log("there is no player");
         }
+        
     }
+
+    public void LetUnitsFight(bool isTheyCan) {
+        if (bothTypeUnitsHere == true) {
+            Debug.Log("Starting to fight...");
+            if (isTheyCan = true) {
+                playerUnit.GetComponent<InitUnit>().canAttack = true;
+                playerUnit.GetComponent<InitUnit>().enemy = enemyUnit;
+            } else {
+                enemyUnit.GetComponent<InitUnit>().canAttack = true;
+                enemyUnit.GetComponent<InitUnit>().enemy = playerUnit;
+            }
+        }
+    }*/
 }

@@ -7,6 +7,7 @@ public class HealthSystem : MonoBehaviour
     public int health;
     public int healthMax;
     public int defence;
+    public GameObject HealthBar;
 
     public HealthSystem(int healthMax) {
         this.healthMax = healthMax;
@@ -22,8 +23,9 @@ public class HealthSystem : MonoBehaviour
     }
 
     public void Damage(int damageAmount) {
+        HealthBar.SetActive(true);
         health -= (damageAmount-defence);
-        if (health < 0) {
+        if (health <= 0) {
             health = 0;
             Destroy(gameObject);
         }
@@ -34,5 +36,13 @@ public class HealthSystem : MonoBehaviour
         health += healAmount;
         if (health > healthMax) health = healthMax;
         //Debug.Log("Healed "+health);
+    }
+
+    void Update() {
+        if (health < healthMax) {
+            HealthBar.SetActive(true);
+        } else {
+            HealthBar.SetActive(false);
+        }
     }
 }

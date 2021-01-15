@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea136d0ee8af4749828019f1c565e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  locationObject: {fileID: 0}
 --- !u!225 &4032302268307657226
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea136d0ee8af4749828019f1c565e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  locationObject: {fileID: 0}
 --- !u!225 &4032302268971982038
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea136d0ee8af4749828019f1c565e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  locationObject: {fileID: 0}
 --- !u!225 &4032302269020597808
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -508,7 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea136d0ee8af4749828019f1c565e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  locationObject: {fileID: 0}
 --- !u!225 &4032302269133938660
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -608,7 +608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea136d0ee8af4749828019f1c565e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  locationObject: {fileID: 0}
 --- !u!225 &4032302269270810211
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea136d0ee8af4749828019f1c565e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  locationObject: {fileID: 0}
 --- !u!225 &4032302269354798491
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -808,7 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea136d0ee8af4749828019f1c565e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  locationObject: {fileID: 0}
 --- !u!225 &4032302269492363594
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -908,7 +908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea136d0ee8af4749828019f1c565e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  locationObject: {fileID: 0}
 --- !u!225 &4032302269616196574
 CanvasGroup:
   m_ObjectHideFlags: 0

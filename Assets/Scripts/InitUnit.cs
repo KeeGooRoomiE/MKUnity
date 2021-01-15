@@ -6,36 +6,73 @@ using UnityEngine.Serialization;
 
 public class InitUnit : MonoBehaviour, IEndDragHandler
 {
-    public int currentLoc;          //saves location number to compare
-    public GameObject enemy;        //uses to inddex enemy 
-    public int nearestDist;         //used as value for maximun distance
-    public bool canFindEnemy;       //bool variable
-    public bool canAttack;         //bool variable
-    public int attackValue;
-    
-    public float nextActionTime = 0.0f;
-    public float period = 0.5f;
+    //[SerializeField] public GameObject HealthBar;               //healthbar index
+    [SerializeField] public GameObject target;                  //uses to index enemy
+    [SerializeField] public int currentLoc;                     //saves location number to compare 
+    [SerializeField] public int AttackValue;                    //current unit attack value
+    [SerializeField] public bool canAttack;                     //bool variable for ability to attack
+    [SerializeField] public bool commitAttack;                  //bool variable for commencing attack
+    //public int nearestDist;
+    //public bool canFindEnemy;
 
-    // Start is called before the first frame update
     private void Awake() {
         currentLoc = 0;
-        canFindEnemy = false;
+        //canFindEnemy = false;
+        commitAttack = true;
+        AttackValue = 2;
     }
 
+    IEnumerator PlayerAtkDelay(float time) {
+        yield return new WaitForSeconds(time);
+        commitAttack = true;
+    }
+
+
     void Update() {
-        if (canAttack) {
-            if (currentLoc != enemy.GetComponent<InitUnit>().currentLoc) {
-                //Debug.Log("units locs not compare");
-                canAttack = false;
-                enemy = null;
+        //checkouts unit and enemy locations
+        /*if (target != null) {
+            if (currentLoc == target.GetComponent<InitUnit>().currentLoc) {
+                canAttack = true;
             } else {
-                //Debug.Log("Units locs"+currentLoc+" and "+enemy.GetComponent<InitUnit>().currentLoc+" are equals");
-                if (Time.time > nextActionTime ) {
-                    enemy.GetComponent<HealthSystem>().Damage(attackValue);
-                    nextActionTime += period;
+                canAttack = false;
+            }
+        } else {
+            canAttack = false;
+        }*/
+
+        //attacking behaviour
+        if (target != null) {
+            if (canAttack == true) {
+                if (commitAttack == true) {
+                    target.GetComponent<HealthSystem>().Damage(AttackValue);
+                    StartCoroutine(PlayerAtkDelay(1.1f));
+                    commitAttack = false;
                 }
-            } 
+            }
         }
+
+        //if (canAttack == true) {
+            /*
+            //close that part is enemy is not found
+            if (target == null) {
+                canAttack = false;
+            } else {
+                canAttack = true;
+            }
+            */
+
+            //permits attacking of enemy
+            /*if (commitAttack == true) {
+                HealthBar.SetActive(true);
+                target.GetComponent<HealthSystem>().Damage(2);
+                StartCoroutine(Delay(1.0f));
+                commitAttack = false;
+            } else {
+                HealthBar.SetActive(false);
+            }
+        } else {
+            HealthBar.SetActive(false);
+        }*/
     }
 
     //triggers with location
@@ -43,6 +80,8 @@ public class InitUnit : MonoBehaviour, IEndDragHandler
 
         if (other.gameObject.tag == "LocationTrigger") {
             currentLoc = other.GetComponent<LocationTriggerCollider>().locationNumber;
+            other.GetComponent<LocationTriggerCollider>().playerUnit = this.gameObject;
+
         }
     }
 
