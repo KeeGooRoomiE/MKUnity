@@ -1072,7 +1072,7 @@ MonoBehaviour:
   GenerationValue: 0
   LocationNumSelector: 0
   parent: {fileID: 507372345}
-  canCreateUnit: 0000
+  canCreateUnit: 0101
 --- !u!1 &236447702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,6 +1181,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 236447709}
+        m_MethodName: ResetTimeSet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &236447705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1257,8 +1268,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Button: {fileID: 236447704}
   TimeToAwake: 3
+  curTime: 0
   period: 1
   textComp: {fileID: 167755696}
+  isTimeSet: 0
 --- !u!1 &246873244
 GameObject:
   m_ObjectHideFlags: 0
