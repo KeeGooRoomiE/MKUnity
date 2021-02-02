@@ -102,6 +102,7 @@ public class LocationTriggerCollider : MonoBehaviour
         //checking for existing enemy unit on a location
         if (enemyUnit == null) {
             ActiveEnemyUnit = false;
+            isUnitExists = false;
         } else {
             ActiveEnemyUnit = true;
         }

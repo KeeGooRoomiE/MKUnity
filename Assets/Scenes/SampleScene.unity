@@ -1028,7 +1028,7 @@ GameObject:
   - component: {fileID: 235170291}
   m_Layer: 5
   m_Name: EnemyProvider
-  m_TagString: Untagged
+  m_TagString: EnemyGen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1065,14 +1065,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   location:
+  - {fileID: 39081453}
   - {fileID: 2040360382}
+  - {fileID: 1232924690}
   - {fileID: 2044787933}
+  - {fileID: 869008732}
+  - {fileID: 336330769}
+  - {fileID: 266041470}
+  - {fileID: 2109929887}
   enemyUnit: {fileID: 2988066147897223955, guid: 7f3bcca4c0868c5489cae52775220aa6,
     type: 3}
   GenerationValue: 0
   LocationNumSelector: 0
   parent: {fileID: 507372345}
-  canCreateUnit: 0101
+  canCreateUnit: 0101010101010101
 --- !u!1 &236447702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2315,7 +2321,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 637, y: 460, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

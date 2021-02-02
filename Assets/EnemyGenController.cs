@@ -36,10 +36,9 @@ public class EnemyGenController : MonoBehaviour
         foreach (GameObject loc in location) {
 
             //select location from an array
-            LocationNumSelector = Random.Range(0,location.Length);
-
+            LocationNumSelector = Random.Range(0,location.Length); //loc.GetComponent<LocationTriggerCollider>().locationNumber;
             //comparing number to an array
-            var locnum = LocationNumSelector + 2;
+            var locnum = LocationNumSelector;
 
             //if location in sort and selection are the same...
             if (loc.GetComponent<LocationTriggerCollider>().locationNumber == locnum) {

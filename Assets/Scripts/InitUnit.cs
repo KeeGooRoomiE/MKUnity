@@ -12,6 +12,7 @@ public class InitUnit : MonoBehaviour, IEndDragHandler
     [SerializeField] public int AttackValue;                    //current unit attack value
     [SerializeField] public bool canAttack;                     //bool variable for ability to attack
     [SerializeField] public bool commitAttack;                  //bool variable for commencing attack
+    [SerializeField] public GameObject EnemyGen;                //GameObject for setting its location number
     //public int nearestDist;
     //public bool canFindEnemy;
 
@@ -20,6 +21,9 @@ public class InitUnit : MonoBehaviour, IEndDragHandler
         //canFindEnemy = false;
         commitAttack = true;
         AttackValue = 2;
+
+        if (EnemyGen == null)
+            EnemyGen = GameObject.FindWithTag("EnemyGen");
     }
 
     IEnumerator PlayerAtkDelay(float time) {
@@ -82,6 +86,10 @@ public class InitUnit : MonoBehaviour, IEndDragHandler
             currentLoc = other.GetComponent<LocationTriggerCollider>().locationNumber;
             other.GetComponent<LocationTriggerCollider>().playerUnit = this.gameObject;
 
+        }
+
+        if (EnemyGen != null) {
+            EnemyGen.GetComponent<EnemyGenController>().LocationNumSelector = currentLoc;
         }
     }
 
