@@ -83,7 +83,7 @@ public class LocationBehaviour : MonoBehaviour, IPointerDownHandler
     }
 
     public void AddGrowth(int value) {
-        if (locGrowth <= maxGrowth) {
+        if (locGrowth+value <= maxGrowth) {
             locGrowth += value;
             panel.UpdateLocation(gameObject);
             Debug.Log("To a location " + locNum + " was added a " + value + " growth");
