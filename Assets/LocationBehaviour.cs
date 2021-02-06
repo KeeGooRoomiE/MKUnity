@@ -81,4 +81,30 @@ public class LocationBehaviour : MonoBehaviour, IPointerDownHandler
             Debug.Log("Location" + locNum + " has "+ locRep + "/" + maxRep + " reputation");
         }
     }
+
+    public void AddGrowth(int value) {
+        if (locGrowth <= maxGrowth) {
+            locGrowth += value;
+            panel.UpdateLocation(gameObject);
+            Debug.Log("To a location " + locNum + " was added a " + value + " growth");
+            Debug.Log("Location" + locNum + " has "+ locGrowth + "/" + maxGrowth + " growth");
+        } else {
+            panel.UpdateLocation(gameObject);
+            Debug.Log("cant add location growth due to max value");
+            Debug.Log("Location" + locNum + " has "+ locGrowth + "/" + maxGrowth + " growth");
+        }
+    }
+
+    public void DivGrowth(int value) {
+        if (locGrowth-value >= 0) {
+            locGrowth -= value;
+            panel.UpdateLocation(gameObject);
+            Debug.Log("To a location " + locNum + " was decremented a " + value + " growth");
+            Debug.Log("Location" + locNum + " has "+ locGrowth + "/" + maxGrowth + " growth");
+        } else {
+            panel.UpdateLocation(gameObject);
+            Debug.Log("cant div location growth due to max value");
+            Debug.Log("Location" + locNum + " has "+ locGrowth + "/" + maxGrowth + " growth");
+        }
+    }
 }
