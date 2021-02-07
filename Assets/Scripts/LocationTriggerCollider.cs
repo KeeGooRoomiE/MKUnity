@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Initializator;
 
 public class LocationTriggerCollider : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class LocationTriggerCollider : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Unit") {
-            if (ActiveEnemyUnit == false) {
+            if (enemyUnit == null) {
                 EUController.CreateUnit();
             }
             //playerUnit = other.gameObject;
@@ -51,7 +52,9 @@ public class LocationTriggerCollider : MonoBehaviour
     
     private void OnTriggerStay2D(Collider2D other) {
         //Debug.Log("Something is collided!");
-        other.GetComponent<InitUnit>().currentLoc = locationNumber;
+        if (other.gameObject.tag == "Unit") {
+            other.GetComponent<InitUnit>().currentLoc = locationNumber;
+        }
         //Debug.Log("Set location "+locationNumber+" to a collided unit");
         
         //Debug.Log("OnTriggerColliderEnter2D called!");
@@ -80,6 +83,7 @@ public class LocationTriggerCollider : MonoBehaviour
         canDivRep = true;
     }
 
+    #region //Auto-trigger variables
     void Update() {
         //ability to increment location reputation periodically
         if (ActiveRepChange == true) {
@@ -104,43 +108,52 @@ public class LocationTriggerCollider : MonoBehaviour
             ActiveEnemyUnit = false;
             isUnitExists = false;
         } else {
-            ActiveEnemyUnit = true;
+            if (playerUnit == null) {
+                locInfo.state = 2;
+                ActiveEnemyUnit = true;
+            }
         }
 
         //checking for existing player unit on a location
         if (playerUnit == null) {
             ActiveRepChange = false;
         } else {
+            if (enemyUnit == null) {
+            locInfo.state = 1;
             ActiveRepChange = true;
-        }
-
-        //make both units make attack
-        if (ActiveEnemyUnit && ActiveRepChange) {
-            if (playerUnit != null) {
-                if (enemyUnit != null) {
-                    playerUnit.GetComponent<InitUnit>().canAttack = true;
-                    playerUnit.GetComponent<InitUnit>().target = enemyUnit;
-                    //enemyUnit.canAttack = true;
-                    //enemyUnit.target = playerUnit;
-                }
             }
         }
 
-        if (playerUnit.GetComponent<InitUnit>().currentLoc != locationNumber) {
-            ActiveRepChange = false;
-            playerUnit = null;
+        //make both units make attack
+        if (playerUnit != null) {
+            if (enemyUnit != null) {
+                playerUnit.GetComponent<InitUnit>().canAttack = true;
+                playerUnit.GetComponent<InitUnit>().target = enemyUnit;
+                locInfo.state = 0;
+                //enemyUnit.canAttack = true;
+                //enemyUnit.target = playerUnit;
+            }
+        }
+
+        if (playerUnit != null) {
+            if (playerUnit.GetComponent<InitUnit>().currentLoc != locationNumber) {
+                ActiveRepChange = false;
+                playerUnit = null;
+            }
         }
 
         if (enemyUnit != null) {
             if (playerUnit != null) {
-                Debug.Log("Location sended to an enemy player instance");
+                //Debug.Log("Location sended to an enemy player instance");
                 enemyUnit.GetComponent<EnemyUnitInit>().target = playerUnit;
             } else {
-                Debug.Log("Location sended to an enemy player null");
+                //Debug.Log("Location sended to an enemy player null");
                 enemyUnit.GetComponent<EnemyUnitInit>().target = null;
             }
         }
     }
+    #endregion
+
     /*
 
     void Update() {

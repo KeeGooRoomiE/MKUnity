@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using static Initializator;
 
 /*
 This script is used to handle DnD functions only.
@@ -31,11 +32,17 @@ public class DnDItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
     public void OnBeginDrag(PointerEventData eventData) {
         canvasGroup.blocksRaycasts = false;
         collider.isTrigger = false;
+        //Debug.Log("Changing global var to true");
+        Global.isUnitDragging = true;
+        Global.draggingUnit = gameObject;
+        //Debug.Log(Global.isUnitDragging);
     }
 
     //while dnd
     public void OnDrag(PointerEventData eventData) {
         rectTransform.anchoredPosition += eventData.delta/ canvas.scaleFactor;
+        //Global.isUnitDragging = true;
+        //Debug.Log(Global.isUnitDragging);
     }
 
     //while drop
@@ -47,6 +54,10 @@ public class DnDItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
     public void OnEndDrag(PointerEventData eventData) {
         canvasGroup.blocksRaycasts = true;
         collider.isTrigger = true;
+        //Debug.Log("Changing global var to false");
+        Global.draggingUnit = null;
+        Global.isUnitDragging = false;
+        //Debug.Log(Global.isUnitDragging);
     }
 
     

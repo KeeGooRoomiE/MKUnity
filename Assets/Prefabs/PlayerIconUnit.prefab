@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 5219315162698385157}
   - component: {fileID: 5219315162698385160}
   m_Layer: 5
-  m_Name: PlayerIcon
+  m_Name: PlayerIconUnit
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9aa3bd0f235b94c47b402c27b46ea1c2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b87bdceb949c58044adf9c10cec18cd5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -646,12 +646,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51098bef2e413a245b4a267a95169983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthBar: {fileID: 5219315163341354862}
   target: {fileID: 0}
   currentLoc: 0
-  attackValue: 2
+  AttackValue: 0
   canAttack: 0
   commitAttack: 0
+  EnemyGen: {fileID: 0}
 --- !u!114 &5219315162698385157
 MonoBehaviour:
   m_ObjectHideFlags: 0

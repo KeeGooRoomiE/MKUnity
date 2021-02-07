@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using static Initializator;
 
 public class EnemyGenController : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class EnemyGenController : MonoBehaviour
         foreach (GameObject loc in location) {
 
             //select location from an array
-            LocationNumSelector = Random.Range(0,location.Length); //loc.GetComponent<LocationTriggerCollider>().locationNumber;
+            LocationNumSelector = Global.draggingUnit.GetComponent<InitUnit>().currentLoc;//Random.Range(0,location.Length); //loc.GetComponent<LocationTriggerCollider>().locationNumber;
             //comparing number to an array
             var locnum = LocationNumSelector;
 

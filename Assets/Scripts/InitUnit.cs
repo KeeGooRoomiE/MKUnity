@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 
 public class InitUnit : MonoBehaviour, IEndDragHandler
 {
+    #region //Init variables
     //[SerializeField] public GameObject HealthBar;               //healthbar index
     [SerializeField] public GameObject target;                  //uses to index enemy
     [SerializeField] public int currentLoc;                     //saves location number to compare 
@@ -15,6 +16,7 @@ public class InitUnit : MonoBehaviour, IEndDragHandler
     [SerializeField] public GameObject EnemyGen;                //GameObject for setting its location number
     //public int nearestDist;
     //public bool canFindEnemy;
+    #endregion
 
     private void Awake() {
         currentLoc = 0;
