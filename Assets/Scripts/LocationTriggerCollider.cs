@@ -17,6 +17,8 @@ public class LocationTriggerCollider : MonoBehaviour
     private RectTransform rectTransform;
     [SerializeField] public bool canAddRep;
     [SerializeField] public bool canDivRep;
+    [SerializeField] public bool canAddGrowth;
+    [SerializeField] public bool canDivGrowth;
     [SerializeField] public bool ActiveRepChange;
     [SerializeField] public bool ActiveEnemyUnit;
     [SerializeField] private LocationBehaviour locInfo; //check another location script
@@ -81,11 +83,13 @@ public class LocationTriggerCollider : MonoBehaviour
         yield return new WaitForSeconds(time);
         canAddRep = true;
         canDivRep = true;
+        canAddGrowth = true;
+        canDivGrowth = true;
     }
 
     #region //Auto-trigger variables
     void Update() {
-        //ability to increment location reputation periodically
+        #region //--ability to increment location reputation periodically
         if (ActiveRepChange == true) {
             if (canAddRep == true) {
                 locInfo.AddRep(1);
@@ -93,8 +97,33 @@ public class LocationTriggerCollider : MonoBehaviour
                 canAddRep = false;
             }
         }
+        #endregion
 
-        //ability to decrement location reputation periodically
+        #region //--ability to increment growth
+        if (ActiveRepChange == true) {
+            if (locInfo.locRep > 50) {
+                if (canAddGrowth == true) {
+                    locInfo.AddGrowth(1);
+                    StartCoroutine(Delay(2.0f));
+                    canAddGrowth = false;
+                }
+            }
+        }
+        #endregion
+
+        #region //--decrement growth
+        if (ActiveEnemyUnit == true) {
+            if (locInfo.locRep > 0) {
+                if (canDivGrowth == true) {
+                    locInfo.DivGrowth(1);
+                    StartCoroutine(Delay(2.0f));
+                    canDivGrowth = false;
+                }
+            }
+        }
+        #endregion
+
+        #region //--ability to decrement location reputation periodically
         if (ActiveEnemyUnit == true) {
             if (canDivRep == true) {
                 locInfo.DivRep(1);
@@ -102,6 +131,7 @@ public class LocationTriggerCollider : MonoBehaviour
                 canDivRep = false;
             }
         }
+        #endregion
 
         //checking for existing enemy unit on a location
         if (enemyUnit == null) {
@@ -109,7 +139,7 @@ public class LocationTriggerCollider : MonoBehaviour
             isUnitExists = false;
         } else {
             if (playerUnit == null) {
-                locInfo.state = 2;
+                //locInfo.state = 2;
                 ActiveEnemyUnit = true;
             }
         }
@@ -119,7 +149,7 @@ public class LocationTriggerCollider : MonoBehaviour
             ActiveRepChange = false;
         } else {
             if (enemyUnit == null) {
-            locInfo.state = 1;
+            //locInfo.state = 1;
             ActiveRepChange = true;
             }
         }

@@ -153,6 +153,7 @@ public class LocationBehaviour : MonoBehaviour, IPointerDownHandler
 
     #region //function to increment a growth
     public void AddGrowth(int value) {
+        state = 1;
         if (locGrowth+value <= maxGrowth) {
             locGrowth += value;
             panel.UpdateLocation(gameObject);
@@ -168,6 +169,7 @@ public class LocationBehaviour : MonoBehaviour, IPointerDownHandler
 
     #region //function to decrement a growth
     public void DivGrowth(int value) {
+        state = 2;
         if (locGrowth-value >= 0) {
             locGrowth -= value;
             panel.UpdateLocation(gameObject);

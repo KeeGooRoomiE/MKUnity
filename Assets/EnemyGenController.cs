@@ -47,22 +47,30 @@ public class EnemyGenController : MonoBehaviour
 
                 //if location if free from enemy unit...
                 if (location[LocationNumSelector].GetComponent<LocationTriggerCollider>().isUnitExists == false) {
+                    
+                    if (canCreateUnit[LocationNumSelector] == true) {
+                        Debug.Log("Creating unit");
+                        //create enemy unit
+                        tempUnit = Instantiate(enemyUnit, parent);
+                        tempUnit.transform.position = location[LocationNumSelector].transform.position;
 
-                    Debug.Log("Creating unit");
-                    //create enemy unit
-                    tempUnit = Instantiate(enemyUnit, parent);
-                    tempUnit.transform.position = location[LocationNumSelector].transform.position;
-
-                    //set unit index to a location object
-                    location[LocationNumSelector].GetComponent<LocationTriggerCollider>().enemyUnit = tempUnit;
-                    Debug.Log("Starting to change location bool...");
-                    location[LocationNumSelector].GetComponent<LocationTriggerCollider>().isUnitExists = true;
-                    Debug.Log("Location bool changed from there...");
-                    canCreateUnit[LocationNumSelector] = false;
+                        //set unit index to a location object
+                        location[LocationNumSelector].GetComponent<LocationTriggerCollider>().enemyUnit = tempUnit;
+                        Debug.Log("Starting to change location bool...");
+                        location[LocationNumSelector].GetComponent<LocationTriggerCollider>().isUnitExists = true;
+                        Debug.Log("Location bool changed from there...");
+                        canCreateUnit[LocationNumSelector] = false;
+                    }
                 } else {
                     Debug.Log("Unit already created...");
+                    canCreateUnit[LocationNumSelector] = false;
                 }
             }
+        }
+        int i;
+        for (i=0; i < canCreateUnit.Length; i++)
+        {
+            canCreateUnit[i] = true;
         }
     }
 }

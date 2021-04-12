@@ -14,11 +14,13 @@ public class InitUnit : MonoBehaviour, IEndDragHandler
     [SerializeField] public bool canAttack;                     //bool variable for ability to attack
     [SerializeField] public bool commitAttack;                  //bool variable for commencing attack
     [SerializeField] public GameObject EnemyGen;                //GameObject for setting its location number
+    //[SerializeField] public LineRenderer sight;                 //WIP line between objects
     //public int nearestDist;
     //public bool canFindEnemy;
     #endregion
 
     private void Awake() {
+        //sight = gameObject.GetComponent<LineRenderer>();
         currentLoc = 0;
         //canFindEnemy = false;
         commitAttack = true;
@@ -49,11 +51,24 @@ public class InitUnit : MonoBehaviour, IEndDragHandler
         //attacking behaviour
         if (target != null) {
             if (canAttack == true) {
+                Debug.Log("/STARTING TO DRAW A LINE");
+                //sight.gameObject.SetActive(true);
+                //Vector3 sp = gameObject.transform.position;
+                //Vector3 ep = target.transform.position;
+                //sight.SetVertexCount(2);
+                //sight.startWidth = 5f;
+                //sight.endWidth = 5f;
+                //sight.SetPosition(0, sp);
+                //sight.SetPosition(1, ep);
+                //Debug.Log("/LINE DRAWED");
                 if (commitAttack == true) {
                     target.GetComponent<HealthSystem>().Damage(AttackValue);
                     StartCoroutine(PlayerAtkDelay(1.1f));
                     commitAttack = false;
                 }
+            } else {
+                //sight.gameObject.SetActive(false);
+                Debug.Log("/CLOSE LINE");
             }
         }
 

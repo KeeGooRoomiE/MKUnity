@@ -6,6 +6,7 @@ public class CreateUnit : MonoBehaviour
 {
     [SerializeField] public GameObject unit;
     [SerializeField] public Transform parent;
+    [SerializeField] public Transform place;
 
     private Vector3 mousePos;
 
@@ -17,7 +18,10 @@ public class CreateUnit : MonoBehaviour
             if (parent != null) {
                 GameObject tmpUnit = Instantiate(unit,parent);
                 tmpUnit.SetActive(true);
-                tmpUnit.transform.position = new Vector3(mousePos.x, mousePos.y, 10);
+                Debug.Log("Setting positions...");
+                tmpUnit.transform.position = place.transform.position;
+                Debug.Log("Unit position["+tmpUnit.transform.position+"] Expected["+mousePos.x+","+mousePos.y+","+0f+"]");
+                //new Vector3(-495f, 80f, 0);
                 
                 //Debug.Log("Unit instantiate");
                 //Debug.Log("Unit: " + unit);
